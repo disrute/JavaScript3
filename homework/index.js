@@ -22,6 +22,7 @@
     Object.entries(options).forEach(([key, value]) => {
       if (key === 'text') {
         elem.textContent = value;
+        elem.classList += "mdc-list-item";
       } else {
         elem.setAttribute(key, value);
       }
@@ -34,8 +35,11 @@
   }
 
   function main(url) {
+    // fetches the json data
     fetchJSON(url, (err, repos) => {
+      // creates constant root (which is the main div in <body>)
       const root = document.getElementById('root');
+      // handle error
       if (err) {
         createAndAppend('div', root, {
           text: err.message,
@@ -43,6 +47,7 @@
         });
         return;
       }
+      // creates a new unordered list and appends beneath root.
       const ul = createAndAppend('ul', root);
       repos.forEach(repo => renderRepoDetails(repo, ul));
     });
